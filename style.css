@@ -207,11 +207,14 @@ button, input, textarea { font-family: inherit; }
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  width: 34px; height: 34px;
+  height: 34px;
+  min-width: 34px;
+  padding: 0 8px;
   border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 13px;
+  font-weight: 500;
   transition: background 0.15s ease, color 0.15s ease;
 }
 .icon-btn:hover { background: rgba(255,255,255,0.07); color: var(--text-primary); }
