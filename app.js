@@ -19,13 +19,14 @@ import {
 // "Your apps" → SDK setup and configuration → Config
 // ---------------------------------------------------------------
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBrFFktufCayJJyiW7owlPQbIWKM1zBbOk",
+  authDomain: "learnalgebramaximus.firebaseapp.com",
+  databaseURL: "https://learnalgebramaximus-default-rtdb.firebaseio.com",
+  projectId: "learnalgebramaximus",
+  storageBucket: "learnalgebramaximus.firebasestorage.app",
+  messagingSenderId: "581042253297",
+  appId: "1:581042253297:web:a1ac31330f78b8e4c76850",
+  measurementId: "G-D7D4G9VE8R"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
