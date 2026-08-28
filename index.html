@@ -97,7 +97,7 @@
           <div class="sidebar-header">
             <div class="logo-mark small">TND</div>
             <span class="sidebar-title">The New Discord</span>
-            <button id="sidebar-toggle" class="icon-btn mobile-only" aria-label="Toggle sidebar">☰</button>
+            <button id="sidebar-toggle" class="icon-btn mobile-only" aria-label="Toggle sidebar">Menu</button>
           </div>
 
           <div class="connection-status" id="connection-status">
@@ -121,8 +121,8 @@
               <div class="user-panel-role" id="user-panel-role"></div>
             </div>
             <div class="user-panel-actions">
-              <button id="profile-btn" class="icon-btn" aria-label="Edit profile" title="Profile">👤</button>
-              <button id="logout-btn" class="icon-btn" aria-label="Log out" title="Log out">🚪</button>
+              <button id="profile-btn" class="icon-btn" aria-label="Edit profile" title="Profile">Profile</button>
+              <button id="logout-btn" class="icon-btn" aria-label="Log out" title="Log out">Log Out</button>
             </div>
           </div>
         </aside>
@@ -132,7 +132,7 @@
 
           <header class="chat-header glass">
             <div class="chat-header-left">
-              <button id="mobile-sidebar-btn" class="icon-btn mobile-only" aria-label="Open sidebar">☰</button>
+              <button id="mobile-sidebar-btn" class="icon-btn mobile-only" aria-label="Open sidebar">Menu</button>
               <span id="channel-name-display" class="channel-name">#general</span>
             </div>
             <div class="chat-header-right" id="staff-controls">
@@ -162,16 +162,16 @@
               Replying to <strong id="reply-preview-name"></strong>
               <span id="reply-preview-snippet" class="reply-preview-snippet"></span>
             </div>
-            <button id="cancel-reply-btn" class="icon-btn" aria-label="Cancel reply">✕</button>
+            <button id="cancel-reply-btn" class="icon-btn" aria-label="Cancel reply">Cancel</button>
           </div>
 
           <!-- Composer -->
           <div class="composer">
-            <button id="file-upload-btn" class="icon-btn composer-icon" aria-label="Upload file" title="Upload file">📎</button>
+            <button id="file-upload-btn" class="icon-btn composer-icon" aria-label="Upload file" title="Upload file">Upload</button>
             <input id="file-input" type="file" class="hidden" />
             <textarea id="message-input" class="message-input" placeholder="Message #general"
                       maxlength="2000" rows="1" aria-label="Message input"></textarea>
-            <button id="send-btn" class="icon-btn composer-icon send-btn" aria-label="Send message" title="Send">➤</button>
+            <button id="send-btn" class="icon-btn composer-icon send-btn" aria-label="Send message" title="Send">Send</button>
           </div>
           <div id="file-preview" class="file-preview hidden"></div>
         </main>
@@ -187,7 +187,7 @@
     <div id="modal-profile" class="modal glass hidden">
       <div class="modal-header">
         <h2>Edit Profile</h2>
-        <button class="icon-btn modal-close" data-close-modal aria-label="Close">✕</button>
+        <button class="icon-btn modal-close" data-close-modal aria-label="Close">Close</button>
       </div>
       <div class="modal-body">
         <label class="field-label" for="profile-display-name">Display Name <span class="char-counter" id="dn-counter">0/16</span></label>
@@ -208,7 +208,7 @@
     <div id="modal-view-profile" class="modal glass hidden">
       <div class="modal-header">
         <h2>Profile</h2>
-        <button class="icon-btn modal-close" data-close-modal aria-label="Close">✕</button>
+        <button class="icon-btn modal-close" data-close-modal aria-label="Close">Close</button>
       </div>
       <div class="modal-body view-profile-body">
         <img id="vp-avatar" class="avatar large" src="" alt="" />
@@ -223,13 +223,13 @@
     <div id="modal-staff-menu" class="modal glass hidden">
       <div class="modal-header">
         <h2>Staff Menu</h2>
-        <button class="icon-btn modal-close" data-close-modal aria-label="Close">✕</button>
+        <button class="icon-btn modal-close" data-close-modal aria-label="Close">Close</button>
       </div>
       <div class="modal-body staff-menu-body">
-        <button id="staff-broadcast-btn" class="btn btn-secondary btn-block">📢 Broadcast</button>
-        <button id="staff-usermanager-btn" class="btn btn-secondary btn-block">👥 User Manager</button>
+        <button id="staff-broadcast-btn" class="btn btn-secondary btn-block">Broadcast</button>
+        <button id="staff-usermanager-btn" class="btn btn-secondary btn-block">User Manager</button>
         <button id="staff-blockrequests-btn" class="btn btn-secondary btn-block">
-          🚫 Block Requests
+          Block Requests
           <span id="block-requests-dot" class="notif-dot hidden"></span>
         </button>
       </div>
@@ -239,7 +239,7 @@
     <div id="modal-broadcast" class="modal glass hidden">
       <div class="modal-header">
         <h2>Send Broadcast</h2>
-        <button class="icon-btn modal-close" data-close-modal aria-label="Close">✕</button>
+        <button class="icon-btn modal-close" data-close-modal aria-label="Close">Close</button>
       </div>
       <div class="modal-body">
         <label class="field-label" for="broadcast-message">Message <span class="char-counter" id="broadcast-counter">0/300</span></label>
@@ -260,7 +260,7 @@
     <div id="modal-usermanager" class="modal glass hidden">
       <div class="modal-header">
         <h2>User Manager</h2>
-        <button class="icon-btn modal-close" data-close-modal aria-label="Close">✕</button>
+        <button class="icon-btn modal-close" data-close-modal aria-label="Close">Close</button>
       </div>
       <div class="modal-body">
         <input id="user-search-input" class="field-input" type="text" placeholder="Search users…" />
@@ -272,7 +272,7 @@
     <div id="modal-manage-user" class="modal glass hidden">
       <div class="modal-header">
         <h2>Manage User</h2>
-        <button class="icon-btn modal-close" data-close-modal aria-label="Close">✕</button>
+        <button class="icon-btn modal-close" data-close-modal aria-label="Close">Close</button>
       </div>
       <div class="modal-body">
         <div class="manage-user-header">
@@ -290,7 +290,7 @@
     <div id="modal-block-reason" class="modal glass hidden">
       <div class="modal-header">
         <h2>Request to Block</h2>
-        <button class="icon-btn modal-close" data-close-modal aria-label="Close">✕</button>
+        <button class="icon-btn modal-close" data-close-modal aria-label="Close">Close</button>
       </div>
       <div class="modal-body">
         <label class="field-label" for="block-reason-input">Reason <span class="char-counter" id="reason-counter">0/300</span></label>
@@ -307,7 +307,7 @@
     <div id="modal-block-requests" class="modal glass hidden">
       <div class="modal-header">
         <h2>Block Requests</h2>
-        <button class="icon-btn modal-close" data-close-modal aria-label="Close">✕</button>
+        <button class="icon-btn modal-close" data-close-modal aria-label="Close">Close</button>
       </div>
       <div class="modal-body">
         <div id="block-requests-list" class="block-requests-list"></div>
@@ -319,7 +319,7 @@
     <div id="modal-confirm" class="modal glass hidden small">
       <div class="modal-header">
         <h2 id="confirm-title">Are you sure?</h2>
-        <button class="icon-btn modal-close" data-close-modal aria-label="Close">✕</button>
+        <button class="icon-btn modal-close" data-close-modal aria-label="Close">Close</button>
       </div>
       <div class="modal-body">
         <p id="confirm-message"></p>
