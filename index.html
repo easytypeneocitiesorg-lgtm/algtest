@@ -24,45 +24,6 @@
   <meta name="twitter:description" content="Join channels, chat live, and moderate your community with The New Discord." />
 
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Firebase (Realtime Database only — no Auth, no Storage, no Firestore) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import {
-      getDatabase, ref, set, get, update, remove, push,
-      onValue, off, query, orderByChild, equalTo, serverTimestamp,
-      onDisconnect
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-    // ---------------------------------------------------------------
-    // INSERT YOUR FIREBASE CONFIG HERE (see setup instructions)
-    // ---------------------------------------------------------------
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-      projectId: "YOUR_PROJECT",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Expose the pieces app.js needs, without polluting global scope further
-    window.__fb = {
-      db, ref, set, get, update, remove, push,
-      onValue, off, query, orderByChild, equalTo, serverTimestamp,
-      onDisconnect
-    };
-
-    // Load the app logic as a classic script after Firebase is ready
-    const s = document.createElement("script");
-    s.src = "app.js";
-    s.defer = true;
-    document.body.appendChild(s);
-  </script>
 </head>
 <body>
 
@@ -374,5 +335,10 @@
   <!-- Toast container -->
   <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
+  <!-- app.js is loaded as a module because it imports the Firebase SDK
+       directly (see the top of app.js for the Firebase config).
+       Module scripts run after the document is parsed, so every element
+       above is guaranteed to exist before app.js runs. -->
+  <script type="module" src="app.js"></script>
 </body>
 </html>
