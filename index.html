@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn Algebra — Algebra Lessons & Practice</title>
+  <meta name="description" content="Free interactive algebra lessons, practice problems, and step-by-step solutions for students of all levels." />
+  <meta name="keywords" content="algebra, learn algebra, algebra practice, math lessons, equations, polynomials" />
+  <meta property="og:title" content="Learn Algebra — Algebra Lessons & Practice" />
+  <meta property="og:description" content="Master algebra with free interactive lessons and practice." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+</head>
+<body>
+  <!-- CONNECTION STATUS -->
+  <div id="connectionStatus" class="connection-status" aria-live="polite">Connecting…</div>
+
+  <!-- LOGIN / REGISTER -->
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card glass">
+      <div class="auth-brand">
+        <div class="logo">The New Discord</div>
+        <p class="tagline">Real-time chat, reimagined</p>
+      </div>
+      <div class="auth-tabs">
+        <button id="tabLogin" class="auth-tab active">Login</button>
+        <button id="tabRegister" class="auth-tab">Create Account</button>
+      </div>
+      <form id="authForm" autocomplete="off">
+        <div class="form-group">
+          <label for="authUsername">Username</label>
+          <input type="text" id="authUsername" maxlength="16" required pattern="[A-Za-z0-9_]{3,16}" autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label for="authPassword">Password</label>
+          <input type="password" id="authPassword" required minlength="4" autocomplete="current-password" />
+        </div>
+        <button type="submit" id="authSubmit" class="btn primary full">Login</button>
+        <p id="authError" class="error-msg" hidden></p>
+        <p id="authLoading" class="loading-msg" hidden>Please wait…</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- BLOCKED SCREEN -->
+  <div id="blockedScreen" class="blocked-screen" hidden>
+    <div class="blocked-card glass">
+      <h1>You have been blocked from this site.</h1>
+      <p>Contact an administrator if you believe this is an error.</p>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app" class="app" hidden>
+    <!-- LEFT SIDEBAR -->
+    <aside id="sidebar" class="sidebar glass">
+      <div class="sidebar-header">
+        <div class="brand">The New Discord</div>
+        <button id="mobileCloseSidebar" class="icon-btn mobile-only" aria-label="Close sidebar">×</button>
+      </div>
+      <nav class="channel-list" id="channelList" role="navigation" aria-label="Channels">
+        <button class="channel-item" data-channel="rules"># rules</button>
+        <button class="channel-item" data-channel="general"># general</button>
+        <button class="channel-item" data-channel="off-topic"># off-topic</button>
+        <button class="channel-item staff-only" data-channel="staff" hidden># staff</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="current-user" id="currentUserArea">
+          <img id="sidebarAvatar" class="avatar" alt="" />
+          <div class="user-meta">
+            <span id="sidebarDisplayName" class="display-name"></span>
+            <span id="sidebarUsername" class="username"></span>
+          </div>
+        </div>
+        <div class="sidebar-actions">
+          <button id="btnProfile" class="icon-btn" title="Edit profile" aria-label="Edit profile">✎</button>
+          <button id="btnLogout" class="icon-btn danger" title="Logout" aria-label="Logout">⏻</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CHAT -->
+    <main class="chat-main">
+      <header class="chat-header glass">
+        <button id="mobileOpenSidebar" class="icon-btn mobile-only" aria-label="Open channels">☰</button>
+        <h1 id="channelTitle"># general</h1>
+        <div id="staffControls" class="staff-controls" hidden>
+          <button id="btnBroadcast" class="btn small" title="Broadcast">Broadcast</button>
+          <button id="btnUserManager" class="btn small" title="User Manager">Users</button>
+          <button id="btnBlockRequests" class="btn small relative" title="Block Requests">
+            Requests
+            <span id="blockReqDot" class="notif-dot" hidden></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- BROADCAST BANNER -->
+      <div id="broadcastBanner" class="broadcast-banner" hidden>
+        <span id="broadcastText"></span>
+        <span id="broadcastTimer" class="broadcast-timer"></span>
+      </div>
+
+      <!-- MESSAGES -->
+      <div id="messageArea" class="message-area" role="log" aria-live="polite" aria-relevant="additions">
+        <div id="messageList" class="message-list"></div>
+        <div id="emptyChannel" class="empty-state" hidden>No messages yet. Be the first!</div>
+        <button id="newMessagesBtn" class="new-messages-btn" hidden>↓ New messages</button>
+      </div>
+
+      <!-- COMPOSER -->
+      <div class="composer-wrap glass">
+        <div id="replyPreview" class="reply-preview" hidden>
+          <span>Replying to <strong id="replyToName"></strong></span>
+          <span id="replyToText" class="reply-snippet"></span>
+          <button id="cancelReply" class="icon-btn" aria-label="Cancel reply">×</button>
+        </div>
+        <div id="muteBanner" class="mute-banner" hidden>You are muted. Remaining: <span id="muteRemaining"></span></div>
+        <div class="composer">
+          <label class="file-btn" title="Attach file">
+            <input type="file" id="fileInput" accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.txt,.zip" hidden />
+            📎
+          </label>
+          <textarea id="messageInput" placeholder="Message #general" maxlength="2000" rows="1" aria-label="Message"></textarea>
+          <button id="sendBtn" class="btn primary" aria-label="Send">Send</button>
+        </div>
+        <div class="char-count"><span id="charCount">0</span>/2000</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  <div id="modalOverlay" class="modal-overlay" hidden>
+    <!-- Profile Edit -->
+    <div id="modalProfile" class="modal glass" hidden role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+      <h2 id="profileTitle">Edit Profile</h2>
+      <div class="profile-pic-edit">
+        <img id="editAvatar" class="avatar large" alt="" />
+        <label class="btn small">Change Picture
+          <input type="file" id="profilePicInput" accept="image/*" hidden />
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="editDisplayName">Display Name <span class="hint">(max 16)</span></label>
+        <input type="text" id="editDisplayName" maxlength="16" />
+        <span class="char-counter"><span id="dnCount">0</span>/16</span>
+      </div>
+      <div class="form-group">
+        <label for="editBio">Bio <span class="hint">(max 750)</span></label>
+        <textarea id="editBio" maxlength="750" rows="4"></textarea>
+        <span class="char-counter"><span id="bioCount">0</span>/750</span>
+      </div>
+      <div class="modal-actions">
+        <button id="saveProfile" class="btn primary">Save</button>
+        <button class="btn secondary modal-close">Cancel</button>
+      </div>
+    </div>
+
+    <!-- View Profile -->
+    <div id="modalViewProfile" class="modal glass" hidden role="dialog" aria-modal="true">
+      <img id="viewAvatar" class="avatar xlarge" alt="" />
+      <h2 id="viewDisplayName"></h2>
+      <p class="username" id="viewUsername"></p>
+      <p class="role-badge" id="viewRole"></p>
+      <p class="bio" id="viewBio"></p>
+      <button class="btn secondary modal-close">Close</button>
+    </div>
+
+    <!-- Broadcast -->
+    <div id="modalBroadcast" class="modal glass" hidden role="dialog" aria-modal="true">
+      <h2>Create Broadcast</h2>
+      <div class="form-group">
+        <label for="broadcastMsg">Message</label>
+        <textarea id="broadcastMsg" maxlength="200" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="broadcastDuration">Duration (seconds)</label>
+        <input type="number" id="broadcastDuration" min="3" max="20" value="10" />
+      </div>
+      <div class="modal-actions">
+        <button id="sendBroadcast" class="btn primary">Broadcast</button>
+        <button class="btn secondary modal-close">Cancel</button>
+      </div>
+    </div>
+
+    <!-- User Manager -->
+    <div id="modalUserManager" class="modal glass wide" hidden role="dialog" aria-modal="true">
+      <h2>User Manager</h2>
+      <input type="search" id="userSearch" placeholder="Search username…" class="search-input" />
+      <div id="userList" class="user-list"></div>
+      <button class="btn secondary modal-close">Close</button>
+    </div>
+
+    <!-- Manage User -->
+    <div id="modalManageUser" class="modal glass" hidden role="dialog" aria-modal="true">
+      <img id="manageAvatar" class="avatar large" alt="" />
+      <h2 id="manageDisplayName"></h2>
+      <p class="username" id="manageUsername"></p>
+      <p class="role-badge" id="manageRole"></p>
+      <div id="manageActions" class="manage-actions"></div>
+      <button class="btn secondary modal-close">Close</button>
+    </div>
+
+    <!-- Block Requests -->
+    <div id="modalBlockRequests" class="modal glass wide" hidden role="dialog" aria-modal="true">
+      <h2>Block Requests</h2>
+      <div id="blockRequestList" class="block-request-list"></div>
+      <p id="noBlockRequests" class="empty-state" hidden>No pending requests.</p>
+      <button class="btn secondary modal-close">Close</button>
+    </div>
+
+    <!-- Confirm -->
+    <div id="modalConfirm" class="modal glass small" hidden role="dialog" aria-modal="true">
+      <p id="confirmText"></p>
+      <div class="modal-actions">
+        <button id="confirmYes" class="btn danger">Confirm</button>
+        <button class="btn secondary modal-close">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Request Block -->
+    <div id="modalRequestBlock" class="modal glass" hidden role="dialog" aria-modal="true">
+      <h2>Request to Block</h2>
+      <p>User: <strong id="reqBlockTarget"></strong></p>
+      <div class="form-group">
+        <label for="blockReason">Reason</label>
+        <textarea id="blockReason" rows="3" required></textarea>
+      </div>
+      <div class="modal-actions">
+        <button id="submitBlockRequest" class="btn danger">Submit Request</button>
+        <button class="btn secondary modal-close">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
