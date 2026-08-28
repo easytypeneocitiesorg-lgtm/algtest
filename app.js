@@ -752,14 +752,14 @@ function renderMessage(msgId, msg) {
 
   actions.appendChild(makeEl("button", {
     className: "icon-btn", attrs: { type: "button", "aria-label": "Reply", title: "Reply" },
-    text: "↩",
+    text: "Reply",
     onClick: () => startReply(msgId, msg),
   }));
 
   if (canEditMessage(msg, state.currentUid) && !msg.attachment) {
     actions.appendChild(makeEl("button", {
       className: "icon-btn", attrs: { type: "button", "aria-label": "Edit", title: "Edit" },
-      text: "✎",
+      text: "Edit",
       onClick: () => startEdit(msgId, msg, row),
     }));
   }
@@ -767,7 +767,7 @@ function renderMessage(msgId, msg) {
   if (canDeleteMessage(msg, state.currentUid, role)) {
     actions.appendChild(makeEl("button", {
       className: "icon-btn", attrs: { type: "button", "aria-label": "Delete", title: "Delete" },
-      text: "🗑",
+      text: "Delete",
       onClick: () => confirmDeleteMessage(msgId),
     }));
   }
@@ -829,7 +829,7 @@ function renderAttachment(att) {
   card.appendChild(info);
   card.appendChild(makeEl("button", {
     className: "icon-btn", attrs: { type: "button", "aria-label": "Download file", title: "Download" },
-    text: "⬇",
+    text: "Download",
     onClick: () => downloadBase64File(att),
   }));
   wrap.appendChild(card);
@@ -1113,11 +1113,11 @@ function renderFilePreview() {
   clearChildren(el.filePreview);
   el.filePreview.classList.remove("hidden");
   el.filePreview.appendChild(makeEl("span", {
-    text: `📎 ${state.pendingFile.name} (${formatBytes(state.pendingFile.size)})`,
+    text: `${state.pendingFile.name} (${formatBytes(state.pendingFile.size)})`,
   }));
   el.filePreview.appendChild(makeEl("button", {
     className: "icon-btn", attrs: { type: "button", "aria-label": "Remove file" },
-    text: "✕",
+    text: "Remove",
     onClick: clearPendingFile,
   }));
 }
@@ -1366,7 +1366,7 @@ function setupStaffControls() {
 
   const btn = makeEl("button", {
     className: "icon-btn", attrs: { type: "button", "aria-label": "Staff menu", title: "Staff menu" },
-    text: "🛡",
+    text: "Staff",
     onClick: openStaffMenu,
   });
   el.staffControls.appendChild(btn);
