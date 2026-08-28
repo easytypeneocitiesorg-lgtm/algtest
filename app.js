@@ -1,13 +1,35 @@
 // ============================================================
 // THE NEW DISCORD — app.js
 // Vanilla JS + Firebase Realtime Database only (no Auth, no Storage)
+//
+// This file is loaded from index.html as <script type="module">,
+// which is what lets it use these import statements directly.
 // ============================================================
 
-const {
-  db, ref, set, get, update, remove, push,
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase, ref, set, get, update, remove, push,
   onValue, off, query, orderByChild, equalTo, serverTimestamp,
   onDisconnect
-} = window.__fb;
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// ---------------------------------------------------------------
+// FIREBASE CONFIG — paste your project's values here.
+// Firebase Console → Project Settings (gear icon) → General tab →
+// "Your apps" → SDK setup and configuration → Config
+// ---------------------------------------------------------------
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getDatabase(firebaseApp);
 
 // ---------------- Constants ----------------
 const CHANNELS = ["rules", "general", "off-topic", "staff"];
